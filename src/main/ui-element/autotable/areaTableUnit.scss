@@ -1,0 +1,23 @@
+.areaSearch {
+  margin-bottom: 8px;
+  .el-input:not(:last-child), .el-select:not(:last-child){
+    margin-bottom: 4px;
+    margin-right: 4px;
+  }
+}
+.areaFormGroup{
+  .title {
+    font-size: 16px;
+  }
+  border: 1px solid #b0b0b0;
+  border-radius: 8px;
+  padding: 8px 8px 0 8px;
+  margin-bottom: 8px;
+}
+.areaTableColumnField{
+  display: flex;
+  justify-content: space-between;
+}
+.zuploadInput{
+  width: 100%;
+}
