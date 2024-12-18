@@ -30,7 +30,7 @@
               <template v-for="(fieldName,index) in fieldNames">
                 <template v-if="true !== getFieldConfig(fieldName).hide && ObjectUtil.noEmpty(scope.row[fieldName])">
                   <div :key="indexGroup+'_'+index" class="areaTableColumnField">
-                    <div>{{ getFieldConfig(fieldName).simpleLabel }}</div>
+                    <div>{{ getFieldConfig(fieldName).label }}</div>
                     <div>
                       <baseField
                         :key="`tableColumn_field_${indexGroup}_${fieldName}`"
@@ -54,7 +54,7 @@
             <el-table-column
               :key="`tableColumn_${fieldName}`"
               :prop="fieldName"
-              :label="getFieldConfig(fieldName).simpleLabel"
+              :label="getFieldConfig(fieldName).label"
               :width="getFieldConfig(fieldName).width"
               :align="getFieldConfig(fieldName).align"
               :sortable="(['number', 'datetime'].includes(getFieldConfig(fieldName).uiType) || getFieldConfig(fieldName).sortable)?'custom':null"
@@ -243,6 +243,7 @@ export default {
         $$post(url, { id: row.id }).then(() => {
           this.$message.success(this.$t('删除成功'))
           this.getPage()
+          this.$store.dispatch('clearDataMapEntity', [this.tableConfig.tableName])
         })
       })
     },
@@ -269,7 +270,8 @@ export default {
         update[propName] = propValue
         $$post(url, update).then(() => {
           this.$message.success(this.$t('保存成功'))
-          // this.$emit('saveSuccess', this.entityInner)
+          this.$store.dispatch('clearDataMapEntity', [this.tableConfig.tableName])
+// this.$emit('saveSuccess', this.entityInner)
         })
       })
       //   }

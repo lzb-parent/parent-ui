@@ -88,7 +88,7 @@ export default {
     }
 
     const attrs = {
-      placeholder: this.area === Areas.form ? this.fieldConfig.label : this.fieldConfig.simpleLabel,
+      placeholder: this.area === Areas.form ? this.fieldConfig.description : this.fieldConfig.label,
       ...(this.fieldConfig.extendProp && JSON.parse(this.fieldConfig.extendProp) || {}),
       ...this.fieldConfig,
       ...this.$attrs,

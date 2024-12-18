@@ -10,7 +10,7 @@
             <el-form-item
                 :key="indexGroup+'_'+index"
                 :prop="fieldName"
-                v-bind="{...getFieldConfig(fieldName),label:getFieldConfig(fieldName).simpleLabel}"
+                v-bind="{...getFieldConfig(fieldName),label:getFieldConfig(fieldName).label}"
             >
 <!--                            getFieldConfig={{getFieldConfig(fieldName).notNull}}-->
               <baseField

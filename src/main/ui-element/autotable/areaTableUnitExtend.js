@@ -22,7 +22,7 @@ const tableConfigUnitDefault = {
     search: {},
     tableColumn: {
       fieldName: null,
-      simpleLabel: null,
+      label: null,
       uiType: null
     },
     form: {
@@ -65,6 +65,9 @@ export default {
   },
   created() {
   },
+  activated() {
+    this.reloadEntitys()
+  },
   methods: {
     getPage(obj) {
       this.$nextTick(() => {
@@ -102,19 +105,7 @@ export default {
       // console.log('reloadConfig after', JSON.stringify(tableConfigUnitInner))
 
       // 查询枚举
-      if (this.$store) {
-        const fieldAll = Object.values(this.tableConfigUnitInner.fieldConfigsMap).flatMap(obj => Object.values(obj))
-
-        const entityNames = [...new Set(fieldAll.map(f => f.entityName).filter(o => o))]
-        const dataEntitys = entityNames
-        dataEntitys.length && await this.$store.dispatch('loadDataMapEntity', dataEntitys)
-
-        const javaTypeEnumClassNames = [...new Set(fieldAll.map(f => f.javaTypeEnumClassName).filter(o => o))]
-        const dataEnums = javaTypeEnumClassNames
-        dataEnums.length && await this.$store.dispatch('loadDataMapEnum', dataEnums)
-
-
-      }
+      await this.reloadEntitys()
       // this.tableConfigUnitInner.loaded = true
       if (this.moduleCode) {
         const entityName = this.tableConfigUnitInner.entityName
@@ -152,6 +143,20 @@ export default {
     //   name:{propType:'text',isEdit:true},
     //   age:{propType:'number'}...
     // },
+    async reloadEntitys() {
+      // 查询枚举
+      if (this.$store) {
+        const fieldAll = Object.values(this.tableConfigUnitInner.fieldConfigsMap).flatMap(obj => Object.values(obj))
+
+        const entityNames = [...new Set(fieldAll.map(f => f.entityName).filter(o => o))]
+        const dataEntitys = entityNames
+        dataEntitys.length && await this.$store.dispatch('loadDataMapEntity', dataEntitys)
+
+        const javaTypeEnumClassNames = [...new Set(fieldAll.map(f => f.javaTypeEnumClassName).filter(o => o))]
+        const dataEnums = javaTypeEnumClassNames
+        dataEnums.length && await this.$store.dispatch('loadDataMapEnum', dataEnums)
+      }
+    },
     getAreaFieldConfigMap(area) {
       const transformKey = key => key
       const transformValue = value => {

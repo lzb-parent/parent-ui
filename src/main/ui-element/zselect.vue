@@ -146,7 +146,8 @@ export default {
     dictList() {
       this.$load()
     },
-    dictListEntity() {
+    dictListEntity(values) {
+      // console.log(`dictListEntity watch ${this.entityName||''} ${this.classname||''}`,values)
       this.$load()
     },
     dictListEnum() {

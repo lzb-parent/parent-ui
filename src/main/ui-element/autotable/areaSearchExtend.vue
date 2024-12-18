@@ -35,7 +35,7 @@
               v-model="scope.row.propName"
               :dict-list="fieldNames.map(n=>{return {...fieldConfigMap[n],disabled:false}})"
               list-code="fieldName"
-              list-label="simpleLabel"
+              list-label="label"
               w="170"
           />
         </template>
