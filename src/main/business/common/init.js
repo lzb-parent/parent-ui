@@ -47,7 +47,7 @@ export async function loadLoginData(store, router, Layout) {
     // 叶子节点编号
     const leafCodes = await $$get('/commonLogin/getAuthRouteCodes')
     // 所有节点
-    const authRoutesAll = await $$get('/commonData/selectList/authRoute')
+    const authRoutesAll = await $$get('/commonData/selectList/authRoute', {enabled:true})
     // 叶子节点
     const authRoutesLeaf = authRoutesAll.filter(o => leafCodes.includes(o.code))
     // 叶子节点 + 上层所有节点 的编号
