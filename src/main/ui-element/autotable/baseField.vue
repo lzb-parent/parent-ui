@@ -2,6 +2,7 @@
 import zselect from '../../ui-element/zselect'
 import zselectAppend from '../../ui-element/zselectAppend'
 import Tinymce from '../../ui-element/Tinymce'
+import CodeMirrorEditor from '../../other-framwork/CodeMirrorEditor'
 import zinput from '../../ui-element/zinput'
 import zupload from '../../ui-element/zupload'
 import zradio from '../../ui-element/zradio'
@@ -89,6 +90,7 @@ export default {
 
     const attrs = {
       placeholder: this.area === Areas.form ? this.fieldConfig.description : this.fieldConfig.label,
+      clearToEmpty: this.area === Areas.form,
       ...(this.fieldConfig.extendProp && JSON.parse(this.fieldConfig.extendProp) || {}),
       ...this.fieldConfig,
       ...this.$attrs,
@@ -111,7 +113,20 @@ export default {
     if (attrs.disabled) {
       attrs.placeholder = ''
     }
-    attrs.size = attrs.size || (this.area === Areas.search ? 'small' : null)
+    // 搜索时,定制组件样式
+    if (this.area === Areas.search) {
+      attrs.size = attrs.size || 'small'
+      attrs.mainLength = 200
+      switch (attrs.uiType){
+        case 'richText':
+        case 'xml':
+          attrs.uiType = 'text'
+          break
+        case 'bool':
+          attrs.uiType = 'zbool'
+          break
+      }
+    }
     // console.log('attrs', attrs)
     let listCode
     let listLabel
@@ -124,7 +139,7 @@ export default {
       case 'password':
       case 'text':
       case 'number':
-        const mainLength = parseInt(this.area === Areas.search ? 200 : (this.fieldConfig.mainLength || 200))
+        const mainLength = parseInt(attrs.mainLength || 200)
         if (mainLength > 200) {
           uiType = 'textarea'
           attrs.autosize = {minRows: mainLength / 200}
@@ -186,6 +201,9 @@ export default {
         break
       case 'richText':
         content = <Tinymce v-model={this.innerValue} module={this.tableConfig.module} height='500' {...{attrs}} />
+        break
+      case 'xml':
+        content = <CodeMirrorEditor v-model={this.innerValue} {...{attrs}} />
         break
       case 'none':
         content = {}

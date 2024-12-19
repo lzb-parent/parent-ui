@@ -1,6 +1,6 @@
 <template>
-  <el-dialog v-if="scope.value" append-to-body :visible.sync="scope.value" width="80%" v-bind="$attrs">
-    <areaForm v-bind="$attrs" :form-data-option="formDataOption" :form-data.sync="formDataInner" @hideForm="scope.value=false" @saveSuccess="e=>$emit('saveSuccess',e)" />
+  <el-dialog v-if="scope.value" append-to-body :visible.sync="scope.value" width="80%" v-bind="$attrs"  :close-on-click-modal="formDataOption!=='insert'" :title="(formDataOption==='insert'?$t('新增'):$t('修改')) + ' ' + tableConfig.label">
+    <areaForm v-bind="$attrs" :tableConfigUnit="tableConfigUnit" :form-data-option="formDataOption" :form-data.sync="formDataInner" @hideForm="scope.value=false" @saveSuccess="e=>$emit('saveSuccess',e)" />
   </el-dialog>
 </template>
 
@@ -8,16 +8,19 @@
 
 import MixinScope from '../../../main/js/mixin/MixinScope'
 import ObjectUtil from '../../../main/js/utils/ObjectUtil'
+import area, {Areas} from "../../../main/ui-element/autotable/area";
 
 export default {
   name: 'AreaFormDialog',
   mixins: [MixinScope],
+  extends: area,
   props: {
     formData: {},
     formDataOption: null,
   },
   data() {
     return {
+      area: Areas.form,
       formDataInner: { ...this.formData },
     }
   },
