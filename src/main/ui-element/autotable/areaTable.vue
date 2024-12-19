@@ -3,6 +3,7 @@
     <!--    tableConfigUnit={{tableConfigUnit}}-->
     <!--    tableConfig={{tableConfig['is-edit']}}-->
     <el-table
+      size="small"
       ref="table"
       v-loading="pageLoading"
       :is-edit="false"
@@ -10,11 +11,15 @@
       :data="pageResponse.records"
       :header-cell-style="handleTheadStyle"
       highlight-current-row
-      border
-      fit
       @sort="handleChangeSort"
       @sort-change="handleChangeSort"
+      :border="ObjectUtil.isEmpty(tableConfig.border)?true:tableConfig.border"
     >
+      <el-table-column v-if="tableColumnPrependCfg" v-bind="tableColumnPrependCfg">
+        <template slot-scope="scope">
+          <slot name="tableColumnPrepend" v-bind="scope"/>
+        </template>
+      </el-table-column>
       <template v-for="(fieldNames,indexGroup) in fieldNamesGroupBy">
         <el-table-column
           v-if="indexGroup"
@@ -77,7 +82,11 @@
           </template>
         </template>
       </template>
-      <slot name="tableColumnOther" />
+      <el-table-column v-if="tableColumnAppendCfg" v-bind="tableColumnAppendCfg">
+        <template slot-scope="scope">
+          <slot name="tableColumnAppend" :scope="scope"/>
+        </template>
+      </el-table-column>
       <el-table-column
         v-if="hasPerm(`${tableConfig.tableName}`,'insert') || hasPerm(`${tableConfig.tableName}`,'update') || hasPerm(`${tableConfig.tableName}`,'delete')"
         :label="$t('操作')"
@@ -127,6 +136,7 @@
       <!--      </slot>-->
     </el-table>
     <el-pagination
+        v-if="!tableConfig.page.hide"
       class="pa-4 mt-2"
       :total="parseInt(pageResponse.total)"
       :current-page.sync="pageRequestParams.curPage"
@@ -150,7 +160,9 @@ export default {
   name: 'AreaTable',
   extends: area,
   props: {
-    pageParams: {}
+    pageParams: {},
+    tableColumnPrependCfg:{},
+    tableColumnAppendCfg:{},
   },
   data() {
     return {
@@ -271,18 +283,13 @@ export default {
         $$post(url, update).then(() => {
           this.$message.success(this.$t('保存成功'))
           this.$store.dispatch('clearDataMapEntity', [this.tableConfig.tableName])
-// this.$emit('saveSuccess', this.entityInner)
         })
       })
-      //   }
-      // })
     },
-    // handleChangeState(row) {
-    //   this.$updateById('exchangeOrder', row).then(() => {
-    //     this.exchangeOrderDialogFormVisible = false
-    //     this.$message.success('保存成功')
-    //   })
-    // }
+    async saveOrUpdateFun(entity) {
+      const url = this.tableConfig[this.formDataOption === Option.insert ? 'insertUrl' : 'updateUrl']
+      return $$post(url, entity)
+    },
   }
 }
 </script>

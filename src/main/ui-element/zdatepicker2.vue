@@ -10,10 +10,13 @@
     :start-placeholder="startPlaceholder"
     :end-placeholder="endPlaceholder"
     :picker-options="pickerOptions"
+    :format="valueFormat"
     :value-format="valueFormat"
     :disabled="disabled"
     v-bind="$props"
+    :default-time="defaultTime"
     @change="handleChange"
+    @clear="dateRange=[]"
   />
 </template>
 
@@ -34,6 +37,7 @@ export default {
     },
     pickerType: { type: String, default: 'daterange' },
     valueFormat: { type: String, default: 'yyyy-MM-dd' },
+    defaultTime: { },
     startPlaceholderInput: { type: String, default: '' },
     endPlaceholderInput: { type: String, default: '' },
     align: { type: String, default: 'right' },
@@ -80,14 +84,14 @@ export default {
   },
   watch: {
     start(newVal) {
-      this.$set(this.dateRange, 0, newVal)
+      this.dateRange && this.$set(this.dateRange, 0, newVal)
     },
     end(newVal) {
-      this.$set(this.dateRange, 1, newVal)
+      this.dateRange && this.$set(this.dateRange, 1, newVal)
     },
     dateRange(newVal) {
-      this.$emit('update:start', newVal[0] || '')
-      this.$emit('update:end', newVal[1] || '')
+      this.$emit('update:start', newVal && newVal[0] || '')
+      this.$emit('update:end', newVal && newVal[1] || '')
     }
   },
   methods: {

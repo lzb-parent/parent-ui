@@ -1,7 +1,7 @@
 
 import { Areas } from './area.js'
 import ObjectUtil from '../../../main/js/utils/ObjectUtil'
-import { getUrlTemplate } from '../../../main/ui-element/autotable/index'
+import {getUrlTemplate, tableConfigUnit} from '../../../main/ui-element/autotable/index'
 import MixinRouteView from '../../../main/js/mixin/MixinRouteView'
 
 const commonProps = {
@@ -28,7 +28,9 @@ const tableConfigUnitDefault = {
     form: {
       labelWidth: '200px'
     },
-    table: {}
+    table: {
+      page:{},
+    }
   },
   fieldConfigsMap: {
     id: { // 拿id字段的配置举例
@@ -49,6 +51,7 @@ export default {
   props: {
     // moduleCode: String,
     // authRouteId: String,
+    tableConfigUnitParams: {},
   },
   data() {
     return {
@@ -64,12 +67,13 @@ export default {
   watch: {
   },
   created() {
+    this.tableConfigUnit = {...this.tableConfigUnit,...this.tableConfigUnitParams}
   },
   activated() {
     this.reloadEntitys()
   },
   methods: {
-    getPage(obj) {
+    getPage(obj = {}) {
       this.$nextTick(() => {
         this.$refs.table.getPage(obj)
       })
@@ -91,7 +95,8 @@ export default {
       const tableConfigUnitInner = ObjectUtil.recursivelyMergeObjects(
         this.tableConfigDb, // 后端配置
         tableConfigUnitDefault, // 前端公共配置
-        this.tableConfigUnit, // 前端定制配置
+        tableConfigUnit,        // 前端定制全局配置
+        this.tableConfigUnit,   // 前端定制单页面配置
       )
       // console.log('reloadConfig combine', tableConfigUnitInner)
 

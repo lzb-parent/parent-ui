@@ -41,7 +41,7 @@ export default {
     },
     value: {
       handler(newValOut, oldVal) {
-        // console.log('MixinScope watch value '+this.$options.name,newValOut)
+        console.log('MixinScope watch value '+this.$options.name,newValOut)
         if (this.clearToEmpty && newValOut === '') {
           this.scope.value = ''
           return
@@ -49,7 +49,7 @@ export default {
         const innerVal = this.$outToInFun(newValOut || this.defaultValue)
         if (!ObjectUtil.deepEqual(this.scope.value, innerVal)) {
           this.scope.value = innerVal
-          // console.log('MixinScope watch value update'+this.$options.name,newValOut)
+          console.log('MixinScope watch value update'+innerVal)
         }
       },
       deep: true
@@ -62,7 +62,6 @@ export default {
     // if (this.init) {
     //   return
     // }
-    // this.init = true
     if (this.value || this.defaultValue) {
       this.scope.value = this.$outToInFun(this.value || this.defaultValue)
       // console.log('MixinScope created value update'+this.$options.name,this.scope.value )

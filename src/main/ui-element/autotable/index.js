@@ -9,6 +9,7 @@ import './areaTableUnit.scss'
 export default {
   install(vue, config = {}) {
     getUrlTemplate = config.getUrlTemplate || function(entityName) { return '/commonData/{option}/{entityName}' }
+    tableConfigUnit = config.tableConfigUnit
     vue.component(areaTableUnit.name, areaTableUnit)
     vue.component(areaSearch.name, areaSearch)
     vue.component(areaTable.name, areaTable)
@@ -18,3 +19,4 @@ export default {
   }
 }
 export let getUrlTemplate
+export let tableConfigUnit

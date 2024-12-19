@@ -1,5 +1,5 @@
 <template>
-  <div class="areaSearch" v-bind="tableConfig">
+  <div v-if="!tableConfig.hide" class="areaSearch" v-bind="tableConfig">
     <slot name="before" />
     <template v-if="adminButtons.includes('query') && hasPerm(`${tableConfig.tableName}`,'selectPage')">
       <template v-for="(fieldName,index) in fieldNames">
@@ -19,7 +19,7 @@
       </template>
     </template>
     <slot name="after" />
-    <zdatepicker2 v-if="adminButtons.includes('query') && hasPerm(`${tableConfig.tableName}`,'selectPage')" size="small" :start.sync="pageParamsInner.start" :end.sync="pageParamsInner.end" />
+    <zdatepicker2 :valueFormat="tableConfig.startEndValueFormat" :defaultTime="tableConfig.startEndDefaultTime" v-if="adminButtons.includes('query') && hasPerm(`${tableConfig.tableName}`,'selectPage')" size="small" :start.sync="pageParamsInner.start" :end.sync="pageParamsInner.end" />
     <el-checkbox v-if="tableConfig.showTableColumnNoGroup" v-model="pageParamsInner.showTableColumnNoGroup" class="ml-4">{{$t('平铺排序')}}</el-checkbox>
     <area-search-extend
         style="margin-right: 20px;"
