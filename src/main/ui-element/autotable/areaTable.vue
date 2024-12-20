@@ -3,7 +3,7 @@
     <!--    tableConfigUnit={{tableConfigUnit}}-->
     <!--    tableConfig={{tableConfig['is-edit']}}-->
     <el-table
-      size="small"
+      :size="tableConfig.size"
       ref="table"
       v-loading="pageLoading"
       :is-edit="false"
@@ -95,16 +95,17 @@
         class-name="small-padding fixed-width"
       >
         <template slot-scope="scope">
+          <slot name="tableOptionPrepend" :scope="scope"/>
           <el-button-group>
             <el-button
               v-if="adminButtons.includes('edit') && hasPerm(`${tableConfig.tableName}`,'update')"
-              size="small"
+              :size="tableConfig.size"
               @click="handleUpdate(scope.row)"
             >{{$t('编辑')}}
             </el-button>
             <el-button
               v-if="adminButtons.includes('copy') && hasPerm(`${tableConfig.tableName}`,'insert')"
-              size="small"
+              :size="tableConfig.size"
               type="primary"
               plain
               @click="handleUpdate({...scope.row,id:null,createTime:null,updateTime:null},Option.insert)"
@@ -112,14 +113,14 @@
             </el-button>
             <el-button
               v-if="adminButtons.includes('delete') && hasPerm(`${tableConfig.tableName}`,'delete')"
-              size="small"
+              :size="tableConfig.size"
               type="danger"
               plain
               @click="handleDelete(scope.row)"
             >{{$t('删除')}}
             </el-button>
-            <slot name="tableOptionColumnOther" v-bind="scope" />
           </el-button-group>
+          <slot name="tableOptionAppend" v-bind="scope" />
         </template>
       </el-table-column>
       <el-table-column
@@ -130,7 +131,7 @@
         class-name="small-padding fixed-width"
       >
         <template slot-scope="scope">
-            <slot name="tableOptionColumnOther" v-bind="scope" />
+            <slot name="tableOptionAppend" v-bind="scope" />
         </template>
       </el-table-column>
       <!--      </slot>-->

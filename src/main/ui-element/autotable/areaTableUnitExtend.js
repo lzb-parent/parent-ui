@@ -29,6 +29,7 @@ const tableConfigUnitDefault = {
       labelWidth: '200px'
     },
     table: {
+      size:'small',
       page:{},
     }
   },
