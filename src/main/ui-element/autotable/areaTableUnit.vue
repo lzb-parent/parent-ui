@@ -30,8 +30,6 @@ export default {
   filters: {},
   extends: areaTableUnitExtend,
   props: {
-    tableConfigUnit: Object,
-    params: {},
   },
   data() {
     return {
@@ -44,7 +42,9 @@ export default {
   },
   watch: {},
   created() {
-    this.getTableConfigDb()
+    if (this.tableConfigUnit.entityName) {
+      this.getTableConfigDb()
+    }
   },
   methods: {
     showForm(data) {

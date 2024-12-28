@@ -28,7 +28,7 @@
         </template>
       </div>
     </template>
-
+    <slot name="formAppend"></slot>
     <div class="text-center">
       <el-button @click="$emit('hideForm')">{{$t('取消')}}</el-button>
       <el-button
@@ -157,7 +157,7 @@ export default {
       })
     },
     rulesInner(field) {
-      const required = field.notNull === 'not_null'
+      const required = field.notEmpty === 'not_empty'
       const pleaseInput = field.uiType === 'image' ? this.$t('请上传') : this.$t('请输入')
       let list = [{required, message: (pleaseInput + ` ` + (field.label || '')), trigger: 'blur'}]
       if (field.rules) {

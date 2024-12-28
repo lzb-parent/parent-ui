@@ -1,5 +1,5 @@
 <template>
-  <van-cell v-if="!computedIsEdit(true)" v-bind="{...$attrs,...$slots}">
+  <van-cell v-if="!computedIsEdit(true)" v-bind="{...$attrs,...$slots}" v-on="$listeners">
 <!--    <div class="text-primary">{{ scope.value }}</div>-->
 
 <!--    default	自定义右侧 value 的内容-->

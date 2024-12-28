@@ -19,7 +19,8 @@ export default {
   },
   methods: {
     $outToInFun(value) {
-      return value && JSON.parse(value) || this.defaultValue
+      // console.log('$outToInFun value',value)
+      return value && JSON.parse(value)
     },
     $inToOutFun(value) {
       return JSON.stringify(value)

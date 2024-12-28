@@ -90,21 +90,21 @@
       <el-table-column
         v-if="hasPerm(`${tableConfig.tableName}`,'insert') || hasPerm(`${tableConfig.tableName}`,'update') || hasPerm(`${tableConfig.tableName}`,'delete')"
         :label="$t('操作')"
-        width="210"
+        :width="tableConfig.opt.size || 210"
         align="center"
         class-name="small-padding fixed-width"
       >
         <template slot-scope="scope">
-          <slot name="tableOptionPrepend" :scope="scope"/>
+          <slot name="tableOptionPrepend" v-bind="scope"/>
           <el-button-group>
             <el-button
-              v-if="adminButtons.includes('edit') && hasPerm(`${tableConfig.tableName}`,'update')"
+              v-if="adminButtons.includes('edit') && hasPerm(`${tableConfig.tableName}`,'update') && tableConfig.filterButton('update', scope)"
               :size="tableConfig.size"
               @click="handleUpdate(scope.row)"
             >{{$t('编辑')}}
             </el-button>
             <el-button
-              v-if="adminButtons.includes('copy') && hasPerm(`${tableConfig.tableName}`,'insert')"
+              v-if="adminButtons.includes('copy') && hasPerm(`${tableConfig.tableName}`,'insert') && tableConfig.filterButton('copy', scope)"
               :size="tableConfig.size"
               type="primary"
               plain
@@ -112,7 +112,7 @@
             >{{$t('复制')}}
             </el-button>
             <el-button
-              v-if="adminButtons.includes('delete') && hasPerm(`${tableConfig.tableName}`,'delete')"
+              v-if="adminButtons.includes('delete') && hasPerm(`${tableConfig.tableName}`,'delete') && tableConfig.filterButton('delete', scope)"
               :size="tableConfig.size"
               type="danger"
               plain
@@ -121,6 +121,7 @@
             </el-button>
           </el-button-group>
           <slot name="tableOptionAppend" v-bind="scope" />
+<!--          {{Object.keys(getFieldConfig('lastOrderState')['_listeners'])}}-->
         </template>
       </el-table-column>
       <el-table-column

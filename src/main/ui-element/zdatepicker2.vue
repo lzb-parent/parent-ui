@@ -17,6 +17,7 @@
     :default-time="defaultTime"
     @change="handleChange"
     @clear="dateRange=[]"
+    v-on="$listeners"
   />
 </template>
 

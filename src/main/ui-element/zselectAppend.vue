@@ -1,5 +1,5 @@
 <template>
-  <zselect v-model="scope.value" v-bind="$attrs" :multiple="multiple" :classname="classname"/>
+  <zselect v-model="scope.value" v-bind="$attrs" :multiple="multiple" :classname="classname" v-on="$listeners"/>
 </template>
 
 <script>

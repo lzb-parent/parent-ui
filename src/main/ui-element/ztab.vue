@@ -1,6 +1,6 @@
 <template>
-  <el-tabs v-model="scope.value" v-bind="$attrs">
-    <el-tab-pane :label="$t(`全部`)" :name="''"></el-tab-pane>
+  <el-tabs v-model="scope.value" v-bind="$attrs" v-on="{...$listeners,input:(val)=>{scope.value=val}}">
+    <el-tab-pane :label="$t(`全部`)" :name="'0'"></el-tab-pane>
     <template v-for="(option,i) in dictListInner"><!-- 对象list形式的数据 -->
       <el-tab-pane :key="i" :disabled="option.disabled" :label="getLabel(option,i)"
                    :name="getCode(option,i)"></el-tab-pane>

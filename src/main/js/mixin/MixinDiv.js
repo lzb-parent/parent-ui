@@ -76,7 +76,7 @@ export default {
             value = this.getProp(parent.$attrs, props)
           }
           if (!ObjectUtil.isNull(value)) {
-            // debugger
+            // console.log(`computedProps ${JSON.stringify(props)} ${value}`,parent)
             return value
           }
           parent = parent.$parent

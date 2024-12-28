@@ -73,9 +73,9 @@ export default {
   },
   render(h) {
     // console.log(`baseField render ${this.area} ${this.fieldConfig.fieldName}`, this.fieldConfig)
-    if (this.fieldConfig.fieldName === 'isOnline') {
-      // debugger
-    }
+    // if (this.fieldConfig.fieldName === 'isOnline') {
+    //   // debugger
+    // }
     this.innerValue = this.value
     this.entityInner = this.entity
     const This = this
@@ -87,18 +87,21 @@ export default {
     if (!ObjectUtil.isNull(this.log)) {
       console.log(`init ${this.$vnode.key}`, this.fieldConfig)
     }
-
-    const attrs = {
+    let listeners = {...this.fieldConfig._listeners, ...this.$listeners};
+    for (let eventName of Object.keys(listeners)) {
+      let fun = listeners[eventName]
+      listeners[eventName] = function (newVal, oldVal) {
+        // console.log('baseField ' + eventName)
+        fun(newVal, oldVal, This.entity)
+      }
+    }
+    let attrs = {
       placeholder: this.area === Areas.form ? this.fieldConfig.description : this.fieldConfig.label,
       clearToEmpty: this.area === Areas.form,
       ...(this.fieldConfig.extendProp && JSON.parse(this.fieldConfig.extendProp) || {}),
       ...this.fieldConfig,
       ...this.$attrs,
       notNull: this.fieldConfig.notNull === 'not_null',
-      onChange: function (newVal, oldVal) {
-        // console.log('baseField onChange')
-        This.fieldConfig.onChange && This.fieldConfig.onChange(newVal, oldVal, This.entity)
-      },
       ...this.params,
     }
     const render = this.fieldConfig.render
@@ -113,19 +116,30 @@ export default {
     if (attrs.disabled) {
       attrs.placeholder = ''
     }
+    if (this.fieldConfig.changeAttrs) {
+      attrs = this.fieldConfig.changeAttrs(attrs, this.entityInner)
+    }
     // 搜索时,定制组件样式
-    if (this.area === Areas.search) {
-      attrs.size = attrs.size || 'small'
-      attrs.mainLength = 200
-      switch (attrs.uiType){
-        case 'richText':
-        case 'xml':
-          attrs.uiType = 'text'
-          break
-        case 'bool':
-          attrs.uiType = 'zbool'
-          break
-      }
+    switch (this.area) {
+      case Areas.search:
+        attrs.size = attrs.size || 'small'
+        attrs.mainLength = 200
+        switch (attrs.uiType) {
+          case 'richText':
+          case 'xml':
+            attrs.uiType = 'text'
+            break
+          case 'bool':
+            attrs.uiType = 'zbool'
+            break
+        }
+        break
+    //   case Areas.table:
+    //     switch (attrs.uiType) {
+    //       case 'file':
+    //         attrs.uiType = 'none'
+    //         break
+    //     }
     }
     // console.log('attrs', attrs)
     let listCode
@@ -148,7 +162,8 @@ export default {
         if (uiType === 'password') {
           attrs.autocomplete = 'new-password'
         }
-        content = <zinput v-model={this.innerValue} {...{attrs}} type={uiType} parent={this.parent}/>
+        content =
+            <zinput v-model={this.innerValue} {...{attrs}} type={uiType} parent={this.parent} {...{on: listeners}} />
         break
       case 'select':
         if (this.fieldConfig.entityName) {
@@ -161,12 +176,10 @@ export default {
         if (attrs.javaTypeEnumClassMultiple) {
           // console.log('this.fieldConfig.valuePrefix',this.fieldConfig.valuePrefix)
           content = <zselectAppend v-model={this.innerValue} listCode={listCode} listLabel={listLabel}
-                                   classname={this.fieldConfig.javaTypeEnumClassName} {...{attrs}} {...{on: This.$listeners}}
-                                   onInput={attrs.onChange}/>
+                                   classname={this.fieldConfig.javaTypeEnumClassName} {...{attrs}} {...{on: listeners}}/>
         } else {
           content = <zselect v-model={this.innerValue} listCode={listCode} listLabel={listLabel}
-                             classname={this.fieldConfig.javaTypeEnumClassName} {...{attrs}} {...{on: This.$listeners}}
-                             onInput={attrs.onChange}/>
+                             classname={this.fieldConfig.javaTypeEnumClassName} {...{attrs}}{...{on: listeners}} />
         }
         break
       case 'datetime':
@@ -184,7 +197,8 @@ export default {
         break
       case 'image':
       case 'images':
-        content = <zupload v-model={this.innerValue} module={this.tableConfig.module} w={100} h={100} {...{attrs}} />
+        content = <zupload v-model={this.innerValue} module={this.tableConfig.module} w={100}
+                           h={100} {...{attrs}} {...{on: listeners}} />
         break
       case 'radio':
         // content = <zradio v-model={this.innerValue} {...{ attrs }} />
@@ -193,17 +207,17 @@ export default {
           listLabel = this.fieldConfig.entityClassLabel || 'label'
         }
         content = <zradio v-model={this.innerValue} listCode={listCode} listLabel={listLabel}
-                          classname={this.fieldConfig.javaTypeEnumClassName} {...{attrs}} {...{on: This.$listeners}}
-                          onInput={attrs.onChange}/>
+                          classname={this.fieldConfig.javaTypeEnumClassName} {...{attrs}} {...{on: listeners}} />
         break
       case 'tinyint':
         content = <zradio v-model={this.innerValue} {...{attrs}} />
         break
       case 'richText':
-        content = <Tinymce v-model={this.innerValue} module={this.tableConfig.module} height='500' {...{attrs}} />
+        content = <Tinymce v-model={this.innerValue} module={this.tableConfig.module}
+                           height='500' {...{attrs}} {...{on: listeners}} />
         break
       case 'xml':
-        content = <CodeMirrorEditor v-model={this.innerValue} {...{attrs}} />
+        content = <CodeMirrorEditor v-model={this.innerValue} {...{attrs}} {...{on: listeners}} />
         break
       case 'none':
         content = {}

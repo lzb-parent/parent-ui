@@ -21,7 +21,7 @@
   <!--  </el-select>-->
 <!--  <div>-->
 <!--    dictListInner={{classname}}-->
-    <el-radio-group v-if="computedIsEdit(true)" v-model="scope.value" v-bind="{...$attrs,...$props}" @input="(p1,p2)=>{$emit('change',p1,p2)}">
+    <el-radio-group v-if="computedIsEdit(true)" v-model="scope.value" v-bind="{...$attrs,...$props}" @input="(p1,p2)=>{$emit('change',p1,p2)}" v-on="$listeners">
         <template v-for="(data,index) in dictListInner">
           <el-radio
             :key="index"
@@ -34,7 +34,7 @@
           </el-radio>
         </template>
       </el-radio-group>
-      <span v-else>
+      <span v-else v-on="$listeners">
         <template v-if="multiple">
           <div v-for="(subVal,i) in scope.value" :key="i" class="subValue">{{ getLabel(dictMap[subVal], null) }} </div>
         </template>

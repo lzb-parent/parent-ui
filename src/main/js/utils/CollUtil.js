@@ -193,6 +193,19 @@ export default {
       }
     })
     return treeData
+  },
+  /**
+   * 数组去重保留顺序
+   */
+  deduplicateArray(arr) {
+    const seen = new Set();
+    return arr.filter(item => {
+      if (seen.has(item)) {
+        return false;
+      } else {
+        seen.add(item);
+        return true;
+      }
+    });
   }
-
 }

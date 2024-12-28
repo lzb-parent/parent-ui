@@ -1,5 +1,5 @@
 <template>
-  <span v-if="!computedIsEdit(true)">
+  <span v-if="!computedIsEdit(true)" v-on="$listeners">
     <span v-if="viewSplitNumIsView">{{ viewSplitNumNumValue }}</span>
     <span v-else>{{ returnValue }}</span>
   </span>
@@ -16,6 +16,7 @@
     :clearable="true"
     :readonly="true"
     :type="type"
+    v-on="$listeners"
   >
 
     <el-button slot="append" icon="el-icon-edit" @click="viewSplitNumIsView=false" />
@@ -35,6 +36,7 @@
     :type="type"
     @blur="$emit('blur')"
     @keyup.enter.native="$emit('enter')"
+    v-on="$listeners"
   >
     <template v-if="viewSplitNum">
       <el-button slot="append" icon="el-icon-view" @click="viewSplitNumIsView=true" />

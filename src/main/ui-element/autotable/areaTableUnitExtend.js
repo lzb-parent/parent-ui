@@ -18,6 +18,9 @@ const tableConfigUnitDefault = {
       fieldNames: [],
       addFieldNames: [],
       removeFieldNames: [],
+      filterButton(option){
+        return true
+      }
     },
     search: {},
     tableColumn: {
@@ -31,6 +34,7 @@ const tableConfigUnitDefault = {
     table: {
       size:'small',
       page:{},
+      opt:{},
     }
   },
   fieldConfigsMap: {
@@ -50,6 +54,7 @@ export default {
   mixins: [MixinRouteView],
   filters: {},
   props: {
+    params: {},
     // moduleCode: String,
     // authRouteId: String,
     tableConfigUnitParams: {},
@@ -63,20 +68,30 @@ export default {
       tableConfigDb: {},
       pageParams: {},
       dialogFormVisible: false,
+      formDataOption: null,
     }
   },
   watch: {
   },
   created() {
-    this.tableConfigUnit = {...this.tableConfigUnit,...this.tableConfigUnitParams}
+    this.pageParams = { ...this.pageParams, ...this.params, ...this.$route.query }
+    this.formData = { ...this.formData, ...this.params }
+    // this.tableConfigUnit = {...this.tableConfigUnit,...this.tableConfigUnitParams}
   },
   activated() {
     this.reloadEntitys()
   },
   methods: {
+    showForm(data) {
+      this.formData = { ...data.entity, ...this.params }
+      this.formDataOption = data.option
+      this.dialogFormVisible = true
+    },
     getPage(obj = {}) {
       this.$nextTick(() => {
-        this.$refs.table.getPage(obj)
+        this.$nextTick(() => {
+          this.$refs.table && this.$refs.table.getPage(obj)
+        })
       })
     },
     async getTableConfigDb() {
@@ -98,6 +113,7 @@ export default {
         tableConfigUnitDefault, // 前端公共配置
         tableConfigUnit,        // 前端定制全局配置
         this.tableConfigUnit,   // 前端定制单页面配置
+        this.tableConfigUnitParams,   // 前端定制单页面配置
       )
       // console.log('reloadConfig combine', tableConfigUnitInner)
 

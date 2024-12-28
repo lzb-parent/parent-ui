@@ -31,5 +31,12 @@ export default {
   methods: {
     // getFileViewUrl: FileUtil.getFileViewUrl,
     getFileViewUrl: FileUtil.getFileViewUrl,
+    jump(url, newPage = false) {
+      if (newPage) {
+        window.open(url, '_blank')
+        return
+      }
+      url && (url.indexOf('http') > -1 && (location.href = url) || (this.$router.push({path: url})))
+    },
   }
 }

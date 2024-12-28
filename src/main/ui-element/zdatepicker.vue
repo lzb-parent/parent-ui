@@ -13,6 +13,7 @@
       :picker-options="pickerOptions"
       :value-format="valueFormat"
       :disabled="disabled"
+      v-on="$listeners"
     />
   </div>
 </template>

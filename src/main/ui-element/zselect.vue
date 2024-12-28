@@ -19,7 +19,7 @@
     </template>
     <slot />
   </el-select>
-  <span v-else>
+  <span v-else  v-on="$listeners">
     <template v-if="multiple">
       <div v-for="(code,i) in scope.value" :key="i" class="subValue" :style="`color:${colorMapInner[code]||''}`">{{ getLabel(dictMap[code], null) }} </div>
     </template>

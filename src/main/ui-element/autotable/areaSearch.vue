@@ -1,7 +1,7 @@
 <template>
   <div v-if="!tableConfig.hide" class="areaSearch" v-bind="tableConfig">
     <slot name="before" />
-    <template v-if="adminButtons.includes('query') && hasPerm(`${tableConfig.tableName}`,'selectPage')">
+    <template v-if="showQuery">
       <template v-for="(fieldName,index) in fieldNames">
         <template v-if="true !== getFieldConfig(fieldName).hide">
           <!--        ObjectUtil.or(getFieldConfig(fieldName).javaTypeEnumClassMultiple, true)-->
@@ -19,9 +19,10 @@
       </template>
     </template>
     <slot name="after" />
-    <zdatepicker2 :valueFormat="tableConfig.startEndValueFormat" :defaultTime="tableConfig.startEndDefaultTime" v-if="adminButtons.includes('query') && hasPerm(`${tableConfig.tableName}`,'selectPage')" size="small" :start.sync="pageParamsInner.start" :end.sync="pageParamsInner.end" />
-    <el-checkbox v-if="tableConfig.showTableColumnNoGroup" v-model="pageParamsInner.showTableColumnNoGroup" class="ml-4">{{$t('平铺排序')}}</el-checkbox>
+    <zdatepicker2 :valueFormat="tableConfig.startEndValueFormat" :defaultTime="tableConfig.startEndDefaultTime" v-if="showQuery" size="small" :start.sync="pageParamsInner.start" :end.sync="pageParamsInner.end" />
+    <el-checkbox v-if="showQuery && tableConfig.showTableColumnNoGroup" v-model="pageParamsInner.showTableColumnNoGroup" class="ml-4">{{$t('平铺排序')}}</el-checkbox>
     <area-search-extend
+        v-if="showQuery"
         style="margin-right: 20px;"
       v-model="pageParamsInner.whereDataUnits"
       :default-value="[]"
@@ -29,7 +30,7 @@
     />
     <slot name="buttonBefore" />
     <el-button
-      v-if="adminButtons.includes('query') && hasPerm(`${tableConfig.tableName}`,'selectPage')"
+      v-if="showQuery"
       size="small"
       type="primary"
       icon="el-icon-search"
@@ -37,7 +38,7 @@
     >{{$t('查询')}}
     </el-button>
     <el-button
-      v-if="adminButtons.includes('add') && hasPerm(`${tableConfig.tableName}`,'insert')"
+      v-if="adminButtons.includes('add') && hasPerm(`${tableConfig.tableName}`,'insert') && tableConfig.filterButton('insert')"
       size="small"
       type="primary"
       icon="el-icon-plus"
@@ -45,7 +46,7 @@
     >{{$t('添加')}}
     </el-button>
     <el-button
-      v-if="adminButtons.includes('export') && hasPerm(`${tableConfig.tableName}`,'export')"
+      v-if="adminButtons.includes('export') && hasPerm(`${tableConfig.tableName}`,'export') && tableConfig.filterButton('export')"
       size="small"
       type="warning"
       icon="el-icon-export"
@@ -79,7 +80,11 @@ export default {
       ObjectUtil,
     }
   },
-  computed: {},
+  computed: {
+    showQuery(){
+      return this.adminButtons.includes('query') && this.hasPerm(`${this.tableConfig.tableName}`,'selectPage') && this.tableConfig.filterButton('query')
+    }
+  },
   watch: {
     pageParamsInner: {
       handler(newVal) {

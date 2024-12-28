@@ -9,6 +9,7 @@
     :size="computedSize"
     :disabled="disabled"
     @blur="onBlur"
+    v-on="$listeners"
   >
     <el-option :label="trueLabel" :value="true" />
     <el-option :label="falseLabel" :value="false" />

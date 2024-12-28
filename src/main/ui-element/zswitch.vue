@@ -4,9 +4,10 @@
        v-bind="$attrs"
        v-model="returnValue"
        :disabled="disabled"
+       v-on="$listeners"
    />
-   <span v-else-if="returnValue" style="color: green;">{{ trueLabel }}</span>
-   <span v-else-if="!returnValue" style="color: #ee7777;">{{ falseLabel }}</span>
+   <span v-else-if="returnValue" style="color: green;" v-on="$listeners">{{ trueLabel }}</span>
+   <span v-else-if="!returnValue" style="color: #ee7777;" v-on="$listeners">{{ falseLabel }}</span>
 </template>
 <script>
 

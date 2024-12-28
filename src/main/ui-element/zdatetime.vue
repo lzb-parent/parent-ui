@@ -1,5 +1,5 @@
 <template>
-  <span v-if="!computedIsEdit(true)">{{ returnValue }}</span>
+  <span v-if="!computedIsEdit(true)" v-on="$listeners">{{ returnValue }}</span>
   <el-date-picker
     v-else-if="type==='date'||type==='datetime'"
     v-model="returnValue"
@@ -15,6 +15,7 @@
     :default-time="defaultTime"
     :title="placeholder"
     @change="change"
+    v-on="$listeners"
   />
   <el-time-select
     v-else-if="type==='time'"
@@ -35,6 +36,7 @@
     :value-format="'HH:mm:ss'"
     :format="'HH:mm:ss'"
     @change="change"
+    v-on="$listeners"
   />
 </template>
 <script>

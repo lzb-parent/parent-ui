@@ -16,6 +16,7 @@
       :before-upload="beforeUpload"
       with-credentials
       class="avatar-uploader"
+      v-on="$listeners"
     >
       <template>
         <div style="position: relative">
