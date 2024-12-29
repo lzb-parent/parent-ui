@@ -9,6 +9,7 @@ import zradio from '../../ui-element/zradio'
 import zbool from '../../ui-element/zbool'
 import zswitch from '../../ui-element/zswitch'
 import zdatetime from '../../ui-element/zdatetime'
+import zuploadFile from '../../ui-element/zuploadFile'
 import {Areas, Option} from './area.js'
 import mixinDiv from '../../../main/js/mixin/MixinDiv'
 import ObjectUtil from '../../../main/js/utils/ObjectUtil'
@@ -25,6 +26,7 @@ export default {
     zbool,
     zswitch,
     zdatetime,
+    zuploadFile,
   },
   mixins: [mixinDiv],
   props: {
@@ -141,7 +143,12 @@ export default {
     //         break
     //     }
     }
-    // console.log('attrs', attrs)
+    // console.log('fieldName', this.fieldConfig.fieldName)
+    // if (this.fieldConfig.fieldName === 'logFileError') {
+    //   // debugger
+    //   console.log('attrs', attrs)
+    //   console.log('this.fieldConfig', this.fieldConfig)
+    // }
     let listCode
     let listLabel
     delete attrs['type']
@@ -194,6 +201,10 @@ export default {
           attrs.width = null
           content = <zswitch v-model={this.innerValue} {...{attrs}} />
         }
+        break
+      case 'file':
+        content = <zuploadFile v-model={this.innerValue} module={this.tableConfig.module} w={100}
+                           h={100} {...{attrs}} {...{on: listeners}} />
         break
       case 'image':
       case 'images':
