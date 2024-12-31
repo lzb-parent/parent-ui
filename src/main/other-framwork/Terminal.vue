@@ -52,12 +52,10 @@ export default {
         fetch(this.scope.value)
             .then((response) => response.text())
             .then((data) => {
-              if (data) {
-                this.contentFile = data;
-                this.$nextTick(() => {
-                  this.scrollToBottom();
-                })
-              }
+              this.contentFile = data;
+              this.$nextTick(() => {
+                this.scrollToBottom();
+              })
             });
       }
     },

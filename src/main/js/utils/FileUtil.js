@@ -109,15 +109,14 @@ export default {
     extractFileName(url) {
         try {
             // debugger
-            if (url.startsWith('/file/')) {
+            if (url.startsWith('{host}/file/')) {
                 url = 'http://0.0.0.0' + url
             }
             // 使用 URL 对象解析链接
             const parsedUrl = new URL(url);
             // 获取路径部分并分割，提取最后一个片段作为文件名
             const pathname = parsedUrl.pathname;
-            const fileName = pathname.substring(pathname.lastIndexOf('/') + 1);
-            return fileName;
+            return pathname.substring(pathname.lastIndexOf('/') + 1);
         } catch (error) {
             console.error('Invalid URL:', url);
             return '';
