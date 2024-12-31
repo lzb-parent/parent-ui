@@ -35,8 +35,7 @@ export default class SocketBaseService {
     //     // 组件卸载时移除事件监听器
     //     eventBus.$off(`get${orderName}Msg`, handleWebSocketMessage)
     //   }
-    eventBus.$emit(`socket_${dataEntity}_${opt}`, data)
-    FileUtil.playAudio(`/static/wav/${dataEntity}.mp3`)
+    this.doSaveOrUpdateMore()
     switch (opt) {
       case 'doInsert':
       case 'doUpdate':
@@ -48,6 +47,7 @@ export default class SocketBaseService {
       default:
     }
   }
+  doSaveOrUpdateMore=()=>{}
 }
 
 export const instance = new SocketBaseService()

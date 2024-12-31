@@ -82,19 +82,24 @@ export default {
     },
     playAudio(src) {
         const myAudio = new Audio(src)
-        if (myAudio) {
+        // 监听音频元数据加载成功事件
+        myAudio.onloadedmetadata = () => {
+            console.log('Audio file exists, ready to play');
             if (myAudio.paused) {
                 try {
-                    const play = myAudio.play()
-                    play && play.catch((e) => {
-                        console.error('play error', e)
-                        console.warn('播放音频失败,谷歌不允许自动播放,请随意点一下网站任意位置.')
-                    })
+                    const play = myAudio.play();
+                    play &&
+                    play.catch((e) => {
+                        console.error('play error', e);
+                        console.warn(
+                            '播放音频失败,谷歌不允许自动播放,请随意点一下网站任意位置.'
+                        );
+                    });
                 } catch (e) {
-                    console.error(e)
+                    console.error('Audio play exception:', e);
                 }
             }
-        }
+        };
     },
     /**
      * 从链接中提取文件名

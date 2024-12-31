@@ -63,10 +63,10 @@ export default {
       type: String,
       default: () => null
     },
-    baseUrl: {
-      type: String,
-      default: () => fileServer
-    },
+    // baseUrl: {
+    //   type: String,
+    //   default: () => fileServer
+    // },
     multiple: {}
   },
 
@@ -88,7 +88,7 @@ export default {
     displayFileList() {
       return this.valueNews.map(file => ({
         name: FileUtil.extractFileName(file),
-        url: this.baseUrl + file, // 动态拼接完整路径
+        url: FileUtil.getFileViewUrl(file), // 动态拼接完整路径
         status: 'fail',
       }));
     }
