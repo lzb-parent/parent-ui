@@ -163,4 +163,10 @@ export default {
 ::v-deep .el-icon-upload-success {
   display: none;
 }
+::v-deep .el-upload--text{
+  display: none;
+}
+::v-deep .el-upload-list__item:first-child {
+  margin-top: 0px;
+}
 </style>

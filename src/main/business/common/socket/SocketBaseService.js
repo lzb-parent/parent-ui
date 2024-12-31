@@ -25,17 +25,19 @@ export default class SocketBaseService {
 
   doSaveOrUpdate = (dataEntity, opt, data, store) => {
     // alert('common SocketBaseService doSaveOrUpdate')
+    //   eventBus.$emit(`socket_${dataEntity}_${opt}`, data)
     // 推送消息给其他vue组件
     //   vue组件监听:
     //   mounted() {
     //     // 组件挂载时开始监听事件
-    //     eventBus.$on(`get${orderName}Msg`, handleWebSocketMessage)
+    //     eventBus.$on(`get${dataEntity}Msg`, handleWebSocketMessage)
     //   },
     //   beforeDestroy() {
     //     // 组件卸载时移除事件监听器
-    //     eventBus.$off(`get${orderName}Msg`, handleWebSocketMessage)
+    //     eventBus.$off(`get${dataEntity}Msg`, handleWebSocketMessage)
     //   }
-    this.doSaveOrUpdateMore()
+    console.log(`doSaveOrUpdateMore ${dataEntity}`, data)
+    this.doSaveOrUpdateMore(dataEntity, opt, data, store)
     switch (opt) {
       case 'doInsert':
       case 'doUpdate':
