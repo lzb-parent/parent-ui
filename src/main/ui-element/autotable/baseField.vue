@@ -237,7 +237,8 @@ export default {
         content = this.innerValue
     }
     // console.log('content',content)
-    return content
+    let changeResult = this.fieldConfig.changeResult || function (o){ return  o}
+    return changeResult.call(this, content, h, this.entityInner, attrs, This.area)
   }
 }
 </script>

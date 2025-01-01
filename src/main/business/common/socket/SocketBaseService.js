@@ -36,7 +36,7 @@ export default class SocketBaseService {
     //     // 组件卸载时移除事件监听器
     //     eventBus.$off(`get${dataEntity}Msg`, handleWebSocketMessage)
     //   }
-    console.log(`doSaveOrUpdateMore ${dataEntity}`, data)
+    // console.log(`doSaveOrUpdateMore ${dataEntity}`, data)
     this.doSaveOrUpdateMore(dataEntity, opt, data, store)
   }
   doSaveOrUpdateMore=(dataEntity, opt, data, store)=>{
