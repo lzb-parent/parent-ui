@@ -38,6 +38,9 @@ export default class SocketBaseService {
     //   }
     console.log(`doSaveOrUpdateMore ${dataEntity}`, data)
     this.doSaveOrUpdateMore(dataEntity, opt, data, store)
+  }
+  doSaveOrUpdateMore=(dataEntity, opt, data, store)=>{
+    eventBus.$emit(`get${dataEntity}Msg`, data)
     switch (opt) {
       case 'doInsert':
       case 'doUpdate':
@@ -49,7 +52,6 @@ export default class SocketBaseService {
       default:
     }
   }
-  doSaveOrUpdateMore=()=>{}
 }
 
 export const instance = new SocketBaseService()

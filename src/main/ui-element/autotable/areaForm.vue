@@ -148,6 +148,7 @@ export default {
           $$post(url, this.entityInner).then(() => {
             this.$message.success(this.$t('保存成功'))
             this.$emit('saveSuccess', this.entityInner)
+            this.$store.dispatch('clearDataMapEntity', [this.tableConfig.tableName])
           }).finally(() => {
             this.loading = false
           })

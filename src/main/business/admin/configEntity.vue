@@ -14,7 +14,7 @@ export default {
         // entityName: 'configEntity',
         tableConfigs: {
           base: {
-            adminButtons: ['query', 'add', 'edit', 'copy', 'delete'],
+            adminButtons: ['query', 'add', 'edit', 'copy', 'delete', 'export'],
             // removeAdminButtons: this.params && this.params.userId ? [] : ['add'],
             // removeFieldNames: this.params && this.params.userId ? ['userId', 'username'] : [],
           },
