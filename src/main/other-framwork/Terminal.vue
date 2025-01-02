@@ -1,5 +1,6 @@
 <template>
   <div ref="terminalContainer" class="terminal-container" @scroll="handleScroll">
+    <i class="el-icon-copy-document ft-20" style="position:absolute;right:80px;top: 10px;" v-clipboard:copy="contentFile+'\n'+contentsWebsocket.join('')" v-clipboard:success="onCopySuccess"></i>
     {{contentFile}}
     <template v-for="content in contentsWebsocket">
       {{content}}<br/>
@@ -90,6 +91,9 @@ export default {
       if (container) {
         container.scrollTop = container.scrollHeight;
       }
+    },
+    onCopySuccess() {
+      this.$message.success('复制成功')
     },
   },
 };
