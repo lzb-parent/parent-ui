@@ -1,10 +1,9 @@
 <template>
   <div ref="terminalContainer" class="terminal-container" @scroll="handleScroll">
-    <i class="el-icon-copy-document ft-20" style="position:absolute;right:30px;top: 10px;" v-clipboard:copy="contentFile+'\n'+contentsWebsocket.join('')" v-clipboard:success="onCopySuccess"></i>
-    {{contentFile}}
-    <template v-for="content in contentsWebsocket">
-      {{content}}<br/>
-    </template>
+    <i class="el-icon-copy-document ft-20" style="position:absolute;right:30px;top: 10px;"
+       v-clipboard:copy="contentFile+'\n'+contentsWebsocket.join('')" v-clipboard:success="onCopySuccess"></i>
+    <template>{{stripAnsi(contentFile)}}</template>
+    <template v-for="content in contentsWebsocket">{{stripAnsi(content)}}<br/></template>
   </div>
 </template>
 
@@ -95,6 +94,11 @@ export default {
     onCopySuccess() {
       this.$message.success('复制成功')
     },
+    //创建一个函数来清除 ANSI 转义序列
+    stripAnsi(input) {
+      const ansiRegex = /\u001B\[[0-9;]*m/g; // 匹配 ANSI 转义序列
+      return input.replace(ansiRegex, '');
+    }
   },
 };
 </script>
