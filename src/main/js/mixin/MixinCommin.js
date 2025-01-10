@@ -1,4 +1,5 @@
 import FileUtil from '../../../main/js/utils/FileUtil'
+import StrUtil from "../../../main/js/utils/StrUtil";
 
 /**
  * 登录,权限 相关全局方法
@@ -29,6 +30,9 @@ export default {
   mounted() {
   },
   methods: {
+    // $$t(code){
+    //   return this.$t(StrUtil.replaceSpecialStr(code))
+    // },
     // getFileViewUrl: FileUtil.getFileViewUrl,
     getFileViewUrl: FileUtil.getFileViewUrl,
     jump(url, newPage = false) {

@@ -106,11 +106,7 @@ export default {
       notNull: this.fieldConfig.notNull === 'not_null',
       ...this.params,
     }
-    const render = this.fieldConfig.render
-    if (render && this.entityInner) {
-      // console.log(`baseField Value ${this.fieldConfig.fieldName} area=${This.area}`)
-      return render.call(this, h, this.entityInner, attrs, This.area)
-    }
+
     if (this.option === Option.insert) {
       attrs.disabled = false
       // return <div>{attrs.disabled}</div>
@@ -127,6 +123,7 @@ export default {
         attrs.size = attrs.size || 'small'
         attrs.mainLength = 200
         switch (attrs.uiType) {
+          case 'textarea':
           case 'richText':
           case 'xml':
             attrs.uiType = 'text'
@@ -143,18 +140,25 @@ export default {
     //         break
     //     }
     }
-    // console.log('fieldName', this.fieldConfig.fieldName)
-    // if (this.fieldConfig.fieldName === 'logFileError') {
-    //   // debugger
-    //   console.log('attrs', attrs)
-    //   console.log('this.fieldConfig', this.fieldConfig)
-    // }
+
     let listCode
     let listLabel
     delete attrs['type']
+    const render = this.fieldConfig.render
+    if (render && this.entityInner) {
+      // console.log(`baseField Value ${this.fieldConfig.fieldName} area=${This.area}`)
+      return render.call(this, h, this.entityInner, attrs, This.area)
+    }
     let content = {}
     let uiType = attrs.uiType || 'text'
     // uiType = 'text'
+    // console.log('fieldName', this.fieldConfig.fieldName)
+    // if (this.fieldConfig.fieldName === 'value') {
+    //   debugger
+    //   console.log('uiType', uiType)
+    //   console.log('attrs', attrs)
+    //   console.log('this.fieldConfig', this.fieldConfig)
+    // }
     switch (uiType) {
       case 'textarea':
       case 'password':
