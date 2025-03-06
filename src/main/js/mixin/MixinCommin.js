@@ -42,5 +42,8 @@ export default {
       }
       url && (url.indexOf('http') > -1 && (location.href = url) || (this.$router.push({path: url})))
     },
+    onCopySuccess() {
+      this.$message.success('复制成功')
+    },
   }
 }

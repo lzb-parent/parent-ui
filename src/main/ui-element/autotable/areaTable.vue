@@ -26,7 +26,7 @@
           :key="'indexGroup_'+ indexGroup"
           :prop="fieldNames[0]"
           :label="indexGroup"
-          :sortable="(['number', 'datetime'].includes(getFieldConfig(fieldName).uiType) || getFieldConfig(fieldName).sortable)?'custom':null"
+          :sortable="(['number', 'datetime'].includes(getFieldConfig(fieldNames[0]).uiType) || getFieldConfig(fieldNames[0]).sortable)?'custom':null"
           :width="getGroup(indexGroup).width || 230"
           :show-overflow-tooltip="getFieldConfig(fieldNames[0]).mainLength>400"
         >

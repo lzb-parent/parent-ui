@@ -22,7 +22,7 @@
         <div style="position: relative">
           <div v-for="(img,i) in valueNews" :key="i" class="ma-1">
             <div
-              v-if="computedIsEdit && !isEmpty"
+              v-if="computedIsEdit(true) && !isEmpty"
               class="del"
               @click.stop="valueNews.length===1?valueNews=['']:$delete(valueNews,i)"
             >
