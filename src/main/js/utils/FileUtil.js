@@ -1,6 +1,8 @@
 import StrUtil from './StrUtil'
 
 export let fileServer = null
+const appName = process.env.VUE_APP_APPLICATION
+
 export default {
     name: 'FileUtil',
     install(fileServerUrl) {
@@ -13,7 +15,7 @@ export default {
         return fileServer + '/upload'
     },
     getFileViewUrl(file) {
-        if (file && file.indexOf('/static') === 0) {
+        if (appName !== 'user' && file && file.indexOf('/static') === 0) {
             let server = fileServer
             server = StrUtil.subStringEnd(server, '/api/')
             server = StrUtil.subStringEnd(server, '/api')
