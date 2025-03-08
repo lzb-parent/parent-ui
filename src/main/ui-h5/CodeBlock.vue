@@ -22,7 +22,6 @@
         />
       </svg>
     </button>
-
     <!-- 使用 textarea 展示代码 -->
     <textarea
         :value="value"
