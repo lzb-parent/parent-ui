@@ -38,7 +38,7 @@
     >{{$t('查询')}}
     </el-button>
     <el-button
-      v-if="adminButtons.includes('add') && hasPerm(`${tableConfig.tableName}`,'insert') && tableConfig.filterButton('insert')"
+      v-if="adminButtons.includes('add') && hasPerm(`${tableConfig.entityName}`,'insert') && tableConfig.filterButton('insert')"
       size="small"
       type="primary"
       icon="el-icon-plus"
@@ -46,7 +46,7 @@
     >{{$t('添加')}}
     </el-button>
     <el-button
-      v-if="adminButtons.includes('export') && hasPerm(`${tableConfig.tableName}`,'export') && tableConfig.filterButton('export')"
+      v-if="adminButtons.includes('export') && hasPerm(`${tableConfig.entityName}`,'export') && tableConfig.filterButton('export')"
       size="small"
       type="warning"
       icon="el-icon-export"
@@ -82,7 +82,7 @@ export default {
   },
   computed: {
     showQuery(){
-      return this.adminButtons.includes('query') && this.hasPerm(`${this.tableConfig.tableName}`,'selectPage') && this.tableConfig.filterButton('query')
+      return this.adminButtons.includes('query') && this.hasPerm(`${this.tableConfig.entityName}`,'selectPage') && this.tableConfig.filterButton('query')
     }
   },
   watch: {

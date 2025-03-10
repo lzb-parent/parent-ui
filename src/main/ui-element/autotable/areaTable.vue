@@ -41,7 +41,7 @@
                         :key="`tableColumn_field_${indexGroup}_${fieldName}`"
                         v-model="scope.row[fieldName]"
                         :area="area"
-                        :is-edit="hasPerm(tableConfig.tableName,'update')&&isEdit(fieldName)"
+                        :is-edit="hasPerm(tableConfig.entityName,'update')&&isEdit(fieldName)"
                         :entity.sync="scope.row"
                         :table-config="tableConfig"
                         :field-config="getFieldConfig(fieldName)"
@@ -71,7 +71,7 @@
                   :key="`tableColumn_${fieldName}`"
                   v-model="scope.row[fieldName]"
                   :area="area"
-                  :is-edit="hasPerm(tableConfig.tableName,'update')&&isEdit(fieldName)"
+                  :is-edit="hasPerm(tableConfig.entityName,'update')&&isEdit(fieldName)"
                   :entity.sync="scope.row"
                   :table-config="tableConfig"
                   :field-config="getFieldConfig(fieldName)"
@@ -88,7 +88,7 @@
         </template>
       </el-table-column>
       <el-table-column
-        v-if="hasPerm(`${tableConfig.tableName}`,'insert') || hasPerm(`${tableConfig.tableName}`,'update') || hasPerm(`${tableConfig.tableName}`,'delete')"
+        v-if="hasPerm(`${tableConfig.entityName}`,'insert') || hasPerm(`${tableConfig.entityName}`,'update') || hasPerm(`${tableConfig.entityName}`,'delete')"
         :label="$t('操作')"
         :width="tableConfig.opt.size || 210"
         align="center"
@@ -98,13 +98,13 @@
           <slot name="tableOptionPrepend" v-bind="scope"/>
           <el-button-group>
             <el-button
-              v-if="adminButtons.includes('edit') && hasPerm(`${tableConfig.tableName}`,'update') && tableConfig.filterButton('update', scope)"
+              v-if="adminButtons.includes('edit') && hasPerm(`${tableConfig.entityName}`,'update') && tableConfig.filterButton('update', scope)"
               :size="tableConfig.size"
               @click="handleUpdate(scope.row)"
             >{{$t('编辑')}}
             </el-button>
             <el-button
-              v-if="adminButtons.includes('copy') && hasPerm(`${tableConfig.tableName}`,'insert') && tableConfig.filterButton('copy', scope)"
+              v-if="adminButtons.includes('copy') && hasPerm(`${tableConfig.entityName}`,'insert') && tableConfig.filterButton('copy', scope)"
               :size="tableConfig.size"
               type="primary"
               plain
@@ -112,7 +112,7 @@
             >{{$t('复制')}}
             </el-button>
             <el-button
-              v-if="adminButtons.includes('delete') && hasPerm(`${tableConfig.tableName}`,'delete') && tableConfig.filterButton('delete', scope)"
+              v-if="adminButtons.includes('delete') && hasPerm(`${tableConfig.entityName}`,'delete') && tableConfig.filterButton('delete', scope)"
               :size="tableConfig.size"
               type="danger"
               plain
@@ -257,7 +257,7 @@ export default {
         $$post(url, { id: row.id }).then(() => {
           this.$message.success(this.$t('删除成功'))
           this.getPage()
-          this.$store.dispatch('clearDataMapEntity', [this.tableConfig.tableName])
+          this.$store.dispatch('clearDataMapEntity', [this.tableConfig.entityName])
         })
       })
     },
@@ -284,7 +284,7 @@ export default {
         update[propName] = propValue
         $$post(url, update).then(() => {
           this.$message.success(this.$t('保存成功'))
-          this.$store.dispatch('clearDataMapEntity', [this.tableConfig.tableName])
+          this.$store.dispatch('clearDataMapEntity', [this.tableConfig.entityName])
         })
       })
     },

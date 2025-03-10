@@ -74,7 +74,7 @@ export async function loadLoginData(store, router, Layout) {
         // 按钮权限
         let permissions = authRoutesLeaf.flatMap(m => initPermissionPath(m.permissionPaths));
         store.set('permissions', permissions)
-        // console.log('permissions', JSON.stringify(permissions))
+        console.log('permissions', JSON.stringify(permissions))
 
         // vue-router 动态路由
         if (authRouteAndParent) {

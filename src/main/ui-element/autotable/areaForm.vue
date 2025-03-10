@@ -32,7 +32,7 @@
     <div class="text-center">
       <el-button @click="$emit('hideForm')">{{$t('取消')}}</el-button>
       <el-button
-          v-if="(adminButtons.includes('add') || adminButtons.includes('edit')) && hasPerm(`${tableConfig.tableName}`,['insert','update'])"
+          v-if="(adminButtons.includes('add') || adminButtons.includes('edit')) && hasPerm(`${tableConfig.entityName}`,['insert','update'])"
           v-loading="loading"
           type="primary"
           @click="saveOrUpdate"
@@ -148,7 +148,7 @@ export default {
           $$post(url, this.entityInner).then(() => {
             this.$message.success(this.$t('保存成功'))
             this.$emit('saveSuccess', this.entityInner)
-            this.$store.dispatch('clearDataMapEntity', [this.tableConfig.tableName])
+            this.$store.dispatch('clearDataMapEntity', [this.tableConfig.entityName])
           }).finally(() => {
             this.loading = false
           })

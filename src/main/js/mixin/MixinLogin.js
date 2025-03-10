@@ -15,6 +15,7 @@ export default {
   computed: {},
   methods: {
     hasPerm(entity, opts) {
+      console.log('entity',entity)
       const permissions = this.$store.get('permissions') || []
       if (Array.isArray(opts)) {
         for (const opt of opts) {

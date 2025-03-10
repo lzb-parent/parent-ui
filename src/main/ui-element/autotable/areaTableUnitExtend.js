@@ -115,7 +115,7 @@ export default {
         this.tableConfigUnit,   // 前端定制单页面配置
         this.tableConfigUnitParams,   // 前端定制单页面配置
       )
-      // console.log('reloadConfig combine', tableConfigUnitInner)
+      console.log('reloadConfig combine', tableConfigUnitInner)
 
       // 合并 base区域 到 其他区域
       this.mergeBaseToOther(this.areaList, tableConfigUnitInner.tableConfigs)

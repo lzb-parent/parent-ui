@@ -15,7 +15,7 @@ export default {
   mixins: [MixinScope],
   props: {
     multiple: {default: true},
-    valuePrefix: {default: ''},
+    valuePrefix: {default: ','},
     classname: String,
   },
   data() {
