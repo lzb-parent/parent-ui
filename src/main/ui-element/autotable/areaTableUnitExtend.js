@@ -129,20 +129,21 @@ export default {
       // 查询枚举
       await this.reloadEntitys()
       // this.tableConfigUnitInner.loaded = true
-      if (this.moduleCode) {
-        const entityName = this.tableConfigUnitInner.entityName
-        const tableConfigs = Object.values(this.tableConfigUnitInner.tableConfigs)
-        // const module = (tableConfigs.find(c => c.module) || {}).module
-        const label = (tableConfigs.find(c => c.label) || {}).label
-        const entityId = (tableConfigs.find(c => c.entityId) || {}).entityId
+      const entityName = this.tableConfigUnitInner.entityName
+      const tableConfigs = Object.values(this.tableConfigUnitInner.tableConfigs)
+      // const module = (tableConfigs.find(c => c.module) || {}).module
+      const label = (tableConfigs.find(c => c.label) || {}).label
+      const entityId = (tableConfigs.find(c => c.entityId) || {}).entityId
+      const module = (tableConfigs.find(c => c.module) || {}).module
+      if (module) {
         const sql =
-  `delete from auth_route where id in (${entityId}01,${entityId}02,${entityId}03,${entityId}04);
-  INSERT INTO auth_route (id, parent_id, type, name, url, regular, perms, icon, component_path, view_path, ext, sort, enabled) VALUES
-  (${entityId}01, ${this.authRouteId}, 2, '${label}', '/${this.moduleCode}/${entityName}', '', 'selectPage:${entityName};selectList:${entityName};selectOne:${entityName}', '', '', '', '', 1, 1),
-  (${entityId}02, ${this.authRouteId}, 3, '${label}新增', '', '', 'insert:${entityName}', '', '', '', '', 10, 1),
-  (${entityId}03, ${this.authRouteId}, 3, '${label}更新', '', '', 'update:${entityName}', '', '', '', '', 10, 1),
-  (${entityId}04, ${this.authRouteId}, 4, '${label}删除', '', '', 'delete:${entityName}', '', '', '', '', 10, 1)
-  ;`
+          `delete from auth_route where id in (${entityId}01,${entityId}02,${entityId}03,${entityId}04);
+          INSERT INTO auth_route (id, parent_id, type, name, url, regular, perms, icon, component_path, view_path, ext, sort, enabled) VALUES
+          (${entityId}01, ${this.authRouteId}, 2, '${label}', '/${module}/${entityName}', '', 'selectPage:${entityName};selectList:${entityName};selectOne:${entityName}', '', '', '', '', 1, 1),
+          (${entityId}02, ${this.authRouteId}, 3, '${label}新增', '', '', 'insert:${entityName}', '', '', '', '', 10, 1),
+          (${entityId}03, ${this.authRouteId}, 3, '${label}更新', '', '', 'update:${entityName}', '', '', '', '', 10, 1),
+          (${entityId}04, ${this.authRouteId}, 4, '${label}删除', '', '', 'delete:${entityName}', '', '', '', '', 10, 1)
+          ;`
         console.log('reloadConfig sql\n\n', sql)
         console.log('\n\n')
       }
@@ -169,7 +170,7 @@ export default {
       // 查询枚举
       if (this.$store) {
         const fieldAll = Object.values(this.tableConfigUnitInner.fieldConfigsMap).flatMap(obj => Object.values(obj))
-
+        // debugger
         const entityNames = [...new Set(fieldAll.map(f => f.entityName).filter(o => o))]
         const dataEntitys = entityNames
         dataEntitys.length && await this.$store.dispatch('loadDataMapEntity', dataEntitys)
