@@ -35,7 +35,7 @@ export async function init(store) {
 // 登录
 export async function login(store, data, router, Layout, loginUrl) {
     const tokenKey = store.get('tokenKey')
-    const {accessToken} = await RequestUtil.$$post(loginUrl || '/commonLogin/login', data)
+    const accessToken = await RequestUtil.$$post(loginUrl || '/commonLogin/login', data)
     Cookies.set(tokenKey, accessToken)
     store.set('token', accessToken)
     await loadLoginData(store, router, Layout)
