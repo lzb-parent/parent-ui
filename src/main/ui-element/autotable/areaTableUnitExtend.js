@@ -135,7 +135,7 @@ export default {
       const label = (tableConfigs.find(c => c.label) || {}).label
       const entityId = (tableConfigs.find(c => c.entityId) || {}).entityId
       const module = (tableConfigs.find(c => c.module) || {}).module
-      if (module) {
+      if (module && !this.mixin.isProd) {
         const sql =
           `delete from auth_route where id in (${entityId}01,${entityId}02,${entityId}03,${entityId}04);
           INSERT INTO auth_route (id, parent_id, type, name, url, regular, perms, icon, component_path, view_path, ext, sort, enabled) VALUES
