@@ -20,7 +20,12 @@ export async function init(store) {
     const authDictMap = CollUtil.listToMap(authDictList, 'code', 'value')
     const tokenKey = (authDictMap['SYSTEM_VERSION'] || '') + '-' + appName.toUpperCase()
     store.set('authDictMap', authDictMap)
-    store.set('siteTitle', authDictMap['SITE_NAME'])
+    let title = authDictMap['SITE_NAME'];
+    store.set('siteTitle', title)
+    if (title) {
+        document.title = title
+    }
+
     store.set('currency', authDictMap['SYSTEM_COUNTRY_CURRENCY_SYMBOL'])
     store.set('fileServer', authDictMap['FILE_UPLOAD_DOMAIN'])
     const countrys = await RequestUtil.simpleGet('/commonData/selectList/country')
