@@ -115,7 +115,7 @@ export default {
         this.tableConfigUnit,   // 前端定制单页面配置
         this.tableConfigUnitParams,   // 前端定制单页面配置
       )
-      console.log('reloadConfig combine', tableConfigUnitInner)
+      // console.log('reloadConfig combine', tableConfigUnitInner)
 
       // 合并 base区域 到 其他区域
       this.mergeBaseToOther(this.areaList, tableConfigUnitInner.tableConfigs)
@@ -144,8 +144,8 @@ export default {
           (${entityId}03, ${this.authRouteId}, 3, '${label}更新', '', '', 'update:${entityName}', '', '', '', '', 10, 1),
           (${entityId}04, ${this.authRouteId}, 4, '${label}删除', '', '', 'delete:${entityName}', '', '', '', '', 10, 1)
           ;`
-        console.log('reloadConfig sql\n\n', sql)
-        console.log('\n\n')
+        // console.log('reloadConfig sql\n\n', sql)
+        // console.log('\n\n')
       }
       // console.log('afterLoad', this.tableConfigUnitInner)
 

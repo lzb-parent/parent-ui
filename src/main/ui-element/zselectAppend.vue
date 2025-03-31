@@ -16,6 +16,7 @@ export default {
   props: {
     multiple: {default: true},
     valuePrefix: {default: ','},
+    // value: {default: ()=>{return []}},
     classname: String,
   },
   data() {
@@ -33,12 +34,13 @@ export default {
       // if (this.classname === 'EnumRegisterProps') {
       // console.log('ZselectAppend $outToInFun', outside)
       // }
-
+// debugger
       if (outside) {
         if (this.valuePrefix && outside.indexOf(this.valuePrefix) === 0) {
           outside = outside.substring(this.valuePrefix.length)
         }
-        return outside.split(',')
+        console.log('outside',outside)
+        return outside.split(this.valuePrefix)
       }
       return []
     },
@@ -53,7 +55,7 @@ export default {
       // }
       inside = inside ? inside.filter(o => o) : []
       if (inside && inside.length) {
-        return this.valuePrefix + inside.join(',')
+        return inside.join(this.valuePrefix)
       }
       return ''
     },

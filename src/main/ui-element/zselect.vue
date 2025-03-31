@@ -202,8 +202,12 @@ export default {
       return option && (this.labelFun({ ...option, $index: index }) || option[this.listLabel])
     },
     $outToInFun(outside) {
-      // if (this.multiple) {
-      //   return outside ? outside.map(optionCode => this.dictMap[optionCode]) : []
+      // debugger
+      // console.log('outside',outside)
+      // console.log('outside',outside.indexOf(',')>=0)
+      // if (this.multiple && outside.indexOf(',')>=0) {
+      //   return outside.split(',')
+      //   // return outside ? outside.map(optionCode => this.dictMap[optionCode]) : []
       // }
       // return this.dictMap[outside]
       // console.log('zselect $outToInFun', outside)
