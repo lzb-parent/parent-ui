@@ -39,8 +39,8 @@ export default {
         if (this.valuePrefix && outside.indexOf(this.valuePrefix) === 0) {
           outside = outside.substring(this.valuePrefix.length)
         }
-        console.log('outside',outside)
-        return outside.split(this.valuePrefix)
+        console.log('outside', outside)
+        return this.multiple ? outside.split(this.valuePrefix) : outside
       }
       return []
     },
@@ -55,7 +55,7 @@ export default {
       // }
       inside = inside ? inside.filter(o => o) : []
       if (inside && inside.length) {
-        return inside.join(this.valuePrefix)
+        return this.multiple ? inside.join(this.valuePrefix) : outside
       }
       return ''
     },
